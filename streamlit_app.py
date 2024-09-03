@@ -39,6 +39,8 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 if 'localStorage' not in st.session_state:
     st.session_state['localStorage'] = LocalStorage()
 
+st.write(st.session_state['localStorage'].getAll())
+
 
 st.session_state['localStorage'].getItem("user_id")
 # localS.deleteAll()
