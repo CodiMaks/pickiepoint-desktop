@@ -10,4 +10,4 @@ dnspython==2.6.1
 requests==2.31.0
 pygame==2.4.0
 stripe==7.7.0
-sendgrid==6.
+sendgrid==6.11.0
