@@ -281,6 +281,12 @@ if 'is_signup_disabled' not in st.session_state:
 if 'user_id' not in st.session_state:
     st.session_state['user_id'] = user_id
 
+if 'summary_type' not in st.session_state:
+    st.session_state['summary_type'] = "Abstractive"
+
+if 'summary_mode' not in st.session_state:
+    st.session_state['summary_mode'] = "Bullet points"
+
 
 def callback(key):
     selection = st.session_state[key]
@@ -1273,11 +1279,23 @@ if st.session_state.current_page == "Summary":
 
     summary_sub_col1, summary_sub_col2, summary_sub_col3 = st.columns(3)
     with summary_sub_col1:
-        summary_type = st_btn_select(("Abstractive", "Extractive"))
+        # summary_type = st_btn_select(("Abstractive", "Extractive"))
+        summary_type = option_menu(None, ["Abstractive", "Extractive"],
+                                 icons=["📋", "📋", "📝"],
+                                 orientation="horizontal",
+                                 default_index=0,
+                                 on_change=callback, key="summary_type_menu")
+                
     with summary_sub_col2:
         summary_but = st.button("Summarize", use_container_width=True, type="primary")
+                
     with summary_sub_col3:
-        summary_mode = st_btn_select(("Bullet points", "Plain text"))
+        # summary_mode = st_btn_select(("Bullet points", "Plain text"))
+        summary_mode = option_menu(None, ["Plain text", "Bullet points"],
+                                 icons=["📋", "📋", "📝"],
+                                 orientation="horizontal",
+                                 default_index=1,
+                                 on_change=callback, key="summary_mode_menu")
 
     summary_settings_but = st.button("⚙ Settings", use_container_width=True)
     if summary_settings_but:
