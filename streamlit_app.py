@@ -1261,9 +1261,9 @@ if st.session_state.current_page == "Summary":
 
     conn = sqlite3.connect('settings_save.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT summary_type FROM settings WHERE customer_id = ?", (areas_customer_id, ))
+    cursor.execute("SELECT summary_type FROM settings WHERE customer_id = ?", (st.session_state['area_customer_id'], ))
     index_summary_type = cursor.fetchone()[0]
-    cursor.execute("SELECT summary_mode FROM settings WHERE customer_id = ?", (areas_customer_id, ))
+    cursor.execute("SELECT summary_mode FROM settings WHERE customer_id = ?", (st.session_state['area_customer_id'], ))
     index_summary_mode = cursor.fetchone()[0]
     conn.commit()
     conn.close()
