@@ -297,7 +297,7 @@ def summary_type_callback(summary_type_spec_key):
 
 def summary_mode_callback(summary_mode_spec_key):
     selection = st.session_state[summary_mode_spec_key]
-    if selection == "Plain text"
+    if selection == "Plain text":
         st.session_state['summary_mode'] = "Plain text"
     elif selection == "Bullet points":
         st.session_state['summary_mode'] = "Bullet points"
