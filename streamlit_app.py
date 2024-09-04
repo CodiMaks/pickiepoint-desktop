@@ -61,7 +61,6 @@ pre_paraphrase_text_area_value = None
 paraphrase_text_area_value = None
 summary_text_area_value = None
 
-areas_customer_id = ""
 
 try:
     areas_customer_id = st.session_state['area_customer_id']
