@@ -37,8 +37,8 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 
 
 localStorage = localStoragePy('pickiepoint-app', 'sqlite')
-localStorage.setItem("user_id", "cus_maks123417")
-st.title(localStorage.getItem("user_id"))
+# localStorage.setItem("user_id", "cus_maks123417")
+# st.title(localStorage.getItem("user_id"))
 
 
 conn = sqlite3.connect('text_areas.db')
