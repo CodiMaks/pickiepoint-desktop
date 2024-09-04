@@ -1334,14 +1334,14 @@ if st.session_state.current_page == "Summary":
     if st.session_state['summary_mode'] == "Bullet points":
         conn = sqlite3.connect('settings_save.db')
         cursor = conn.cursor()
-        cursor.execute("UPDATE settings SET summary_mode = ? WHERE customer_id = ?", (0, areas_customer_id))
+        cursor.execute("UPDATE settings SET summary_mode = ? WHERE customer_id = ?", (1, areas_customer_id))
         conn.commit()
         conn.close()
 
     elif st.session_state['summary_mode'] == "Plain text":
         conn = sqlite3.connect('settings_save.db')
         cursor = conn.cursor()
-        cursor.execute("UPDATE settings SET summary_mode = ? WHERE customer_id = ?", (1, areas_customer_id))
+        cursor.execute("UPDATE settings SET summary_mode = ? WHERE customer_id = ?", (0, areas_customer_id))
         conn.commit()
         conn.close()
 
