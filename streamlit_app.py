@@ -2,7 +2,7 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 from st_btn_select import st_btn_select
-from streamlit_local_storage import LocalStorage
+from localStoragePy import localStoragePy
 
 import json
 import sqlite3
@@ -36,17 +36,9 @@ hide_st_style = """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
 
-if 'localStorage' not in st.session_state:
-    st.session_state['localStorage'] = LocalStorage()
-
-html_for_localStorage = "localStorage.getItem('user_id')"
-st.caption(html_for_localStorage, unknown_allow
-
-# st.write(st.session_state['localStorage'].getAll())
-
-
-# st.session_state['localStorage'].getItem("user_id")
-# localS.deleteAll()
+localStorage = localStoragePy('pickiepoint-app', 'sqlite')
+localStorage.setItem("user_id", "cus_maks123417")
+st.title(localStorage.getItem("user_id"))
 
 
 conn = sqlite3.connect('text_areas.db')
@@ -59,8 +51,9 @@ paraphrase_content TEXT, summary_content TEXT, email TEXT, password TEXT, custom
 # cursor.execute("""INSERT INTO areas VALUES (?, ?, ?, ?)""", ("", "", "", ""))
 
 if 'area_customer_id' not in st.session_state:
-    if st.session_state['localStorage'].getItem("user_id"):
-        st.session_state['area_customer_id'] = st.session_state['localStorage'].getItem("user_id")
+    pass
+    # if st.session_state['localStorage'].getItem("user_id"):
+        # st.session_state['area_customer_id'] = st.session_state['localStorage'].getItem("user_id")
 
 
 youtube_text_area_value = None
@@ -158,7 +151,7 @@ if 'session_id' not in st.session_state:
 
     time.sleep(2)
 
-    user_id_cookie = st.session_state['localStorage'].getItem("user_id")
+    user_id_cookie = None
     if user_id_cookie:
         st.subheader("cookie is present")
 
