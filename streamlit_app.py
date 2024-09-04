@@ -1270,7 +1270,7 @@ if st.session_state.current_page == "Summary":
 
     summary_sub_col1, summary_sub_col2, summary_sub_col3 = st.columns(3)
     with summary_sub_col1:
-        summary_type = st_btn_select(("Abstractive", "Extractive"), index=index_summary_type, key="krovjsopcsojeue839R7772irjivrjivr")
+        summary_type = st_btn_select(("Abstractive", "Extractive"), index=0)
     with summary_sub_col2:
         summary_but = st.button("Summarize", use_container_width=True, type="primary")
     with summary_sub_col3:
