@@ -38,7 +38,7 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 
 localStorage = localStoragePy('pickiepoint-app', 'sqlite')
 # localStorage.setItem("user_id", "cus_maks123417")
-localStorage.removeItem("user_id")
+# localStorage.removeItem("user_id")
 # st.title(localStorage.getItem("user_id"))
 
 
