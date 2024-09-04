@@ -286,6 +286,21 @@ if 'summary_type' not in st.session_state:
 
 if 'summary_mode' not in st.session_state:
     st.session_state['summary_mode'] = "Bullet points"
+            
+
+def summary_type_callback(summary_type_spec_key):
+    selection = st.session_state[summary_type_spec_key]
+    if selection == "Abstractive":
+        st.session_state['summary_type'] = "Abstractive"
+    elif selection == "Extractive":
+        st.session_state['summary_type'] "Extractive"
+
+def summary_mode_callback(summary_mode_spec_key):
+    selection = st.session_state[summary_mode_spec_key]
+    if selection == "Plain text"
+        st.session_state['summary_mode'] = "Plain text"
+    elif selection == "Bullet points":
+        st.session_state['summary_mode'] = "Bullet points"
 
 
 def callback(key):
@@ -1275,55 +1290,55 @@ if st.session_state.current_page == "Summary":
         conn.commit()
         conn.close()
     except:
-        pass
+        index_summary_type = 0
+        index_summary_mode = 1
 
     summary_sub_col1, summary_sub_col2, summary_sub_col3 = st.columns(3)
     with summary_sub_col1:
-        # summary_type = st_btn_select(("Abstractive", "Extractive"))
         summary_type = option_menu(None, ["Abstractive", "Extractive"],
                                  icons=["📋", "📋", "📝"],
                                  orientation="horizontal",
-                                 default_index=0,
-                                 on_change=callback, key="summary_type_menu")
+                                 default_index=index_summary_type,
+                                 on_change=summary_type_callback, key="summary_type_menu")
                 
     with summary_sub_col2:
         summary_but = st.button("Summarize", use_container_width=True, type="primary")
                 
     with summary_sub_col3:
-        # summary_mode = st_btn_select(("Bullet points", "Plain text"))
         summary_mode = option_menu(None, ["Plain text", "Bullet points"],
                                  icons=["📋", "📋", "📝"],
                                  orientation="horizontal",
-                                 default_index=1,
-                                 on_change=callback, key="summary_mode_menu")
+                                 default_index=index_summary_mode,
+                                 on_change=summary_type_callback, key="summary_mode_menu")
 
+            
     summary_settings_but = st.button("⚙ Settings", use_container_width=True)
     if summary_settings_but:
         st.session_state.current_page = "Settings"
         st.rerun()
 
-    if summary_type == "Abstractive":
+    if st.session_state['summary_type'] == "Abstractive":
         conn = sqlite3.connect('settings_save.db')
         cursor = conn.cursor()
         cursor.execute("UPDATE settings SET summary_type = ? WHERE customer_id = ?", (0, areas_customer_id))
         conn.commit()
         conn.close()
 
-    elif summary_type == "Extractive":
+    elif st.session_state['summary_type'] == "Extractive":
         conn = sqlite3.connect('settings_save.db')
         cursor = conn.cursor()
         cursor.execute("UPDATE settings SET summary_type = ? WHERE customer_id = ?", (1, areas_customer_id))
         conn.commit()
         conn.close()
 
-    if summary_mode == "Bullet points":
+    if st.session_state['summary_mode'] == "Bullet points":
         conn = sqlite3.connect('settings_save.db')
         cursor = conn.cursor()
         cursor.execute("UPDATE settings SET summary_mode = ? WHERE customer_id = ?", (0, areas_customer_id))
         conn.commit()
         conn.close()
 
-    elif summary_mode == "Plain text":
+    elif st.session_state['summary_mode'] == "Plain text":
         conn = sqlite3.connect('settings_save.db')
         cursor = conn.cursor()
         cursor.execute("UPDATE settings SET summary_mode = ? WHERE customer_id = ?", (1, areas_customer_id))
@@ -1507,7 +1522,7 @@ if st.session_state.current_page == "Summary":
                 for summary_piece_sentence in response.json()["data"]:
                     summary_sentences.append(summary_piece_sentence)
 
-            if summary_mode == "Bullet points":
+            if st.session_state['summary_mode'] == "Bullet points":
                 total_sentences = 0
                 complete_sentence_list = []
                 for sentence in summary_sentences:
@@ -1527,7 +1542,7 @@ if st.session_state.current_page == "Summary":
                 conn.close()
                 st.rerun()
 
-            elif summary_mode == "Plain text":
+            elif st.session_state['summary_mode'] == "Plain text":
                 full_summary = ""
                 if len(summary_sentences) > int(sentences):
                     excess_sentences = len(summary_sentences) - int(sentences)
@@ -1562,7 +1577,7 @@ if st.session_state.current_page == "Summary":
             }
             response = requests.post(url, json=payload, headers=headers)
 
-            if summary_mode == "Bullet points":
+            if st.session_state['summary_mode'] == "Bullet points":
                 sentence_list = ""
                 for sentence in response.json()["data"]:
                     sentence_list += f"{sentence}\n\n"
@@ -1581,7 +1596,7 @@ if st.session_state.current_page == "Summary":
                 conn.close()
                 st.rerun()
 
-            elif summary_mode == "Plain text":
+            elif st.session_state['summary_mode'] == "Plain text":
                 all_sentences = ""
                 for sentence in response.json()["data"]:
                     all_sentences += f"{sentence} "
@@ -1649,7 +1664,7 @@ if st.session_state.current_page == "Summary":
         }
         response1 = requests.post(url1, data=payload1, headers=headers1)
 
-        if summary_mode == "Bullet points":
+        if st.session_state['summary_mode'] == "Bullet points":
             sentence_list = ""
             for sentence in response1.json()["sentences"]:
                 sentence_list += f"- {sentence}\n\n"
@@ -1662,7 +1677,7 @@ if st.session_state.current_page == "Summary":
             conn.close()
             st.rerun()
 
-        elif summary_mode == "Plain text":
+        elif st.session_state['summary_mode'] == "Plain text":
             all_sentences = ""
             for sentence in response1.json()["sentences"]:
                 all_sentences += f"{sentence} "
@@ -1694,7 +1709,7 @@ if st.session_state.current_page == "Summary":
 
             if summary_source == "URL":
 
-                if summary_type == "Abstractive":
+                if st.session_state['summary_type'] == "Abstractive":
 
                     url = "https://chatgpt4-api.p.rapidapi.com/gpt"
                     querystring = {
@@ -1705,7 +1720,7 @@ if st.session_state.current_page == "Summary":
                     }
                     response = requests.get(url, headers=headers, params=querystring)
 
-                    if summary_mode == "Plain text":
+                    if st.session_state['summary_mode'] == "Plain text":
                         conn = sqlite3.connect('text_areas.db')
                         cursor = conn.cursor()
                         cursor.execute("UPDATE areas SET summary_content = ? WHERE customer_id = ?",
@@ -1714,7 +1729,7 @@ if st.session_state.current_page == "Summary":
                         conn.close()
                         st.rerun()
 
-                    elif summary_mode == "Bullet points":
+                    elif st.session_state['summary_mode'] == "Bullet points":
                         sentences = re.split(r'(?<=[.!?]) +', response.json()["content"])
                         sentences_with_dash = ['- ' + sentence for sentence in sentences]
                         bulleted_text = '\n\n'.join(sentences_with_dash)
@@ -1727,7 +1742,7 @@ if st.session_state.current_page == "Summary":
                         conn.close()
                         st.rerun()
 
-                elif summary_type == "Extractive":
+                elif st.session_state['summary_type'] == "Extractive":
 
                     url = "https://textanalysis-text-summarization.p.rapidapi.com/text-summarizer-url"
 
@@ -1742,7 +1757,7 @@ if st.session_state.current_page == "Summary":
                     }
                     response = requests.post(url, data=payload, headers=headers)
 
-                    if summary_mode == "Bullet points":
+                    if st.session_state['summary_mode'] == "Bullet points":
                         sentence_list = ""
                         try:
                             for sentence in response.json()["sentences"]:
@@ -1761,7 +1776,7 @@ if st.session_state.current_page == "Summary":
                             conn.close()
                             st.rerun()
 
-                    elif summary_mode == "Plain text":
+                    elif st.session_state['summary_mode'] == "Plain text":
                         all_sentences = ""
                         try:
                             for sentence in response.json()["sentences"]:
@@ -1793,7 +1808,7 @@ if st.session_state.current_page == "Summary":
 
                 lang_code = response.json()["data"]["detections"][0][0]["language"]
 
-                if summary_type == "Abstractive":
+                if st.session_state['summary_type'] == "Abstractive":
 
                     if len(str(summary_text_area)) > 52000:
 
@@ -1819,7 +1834,7 @@ if st.session_state.current_page == "Summary":
                             for summary_piece_sentence in response.json()["data"]:
                                 summary_sentences.append(summary_piece_sentence)
 
-                        if summary_mode == "Bullet points":
+                        if st.session_state['summary_mode'] == "Bullet points":
                             total_sentences = 0
                             complete_sentence_list = []
                             for sentence in summary_sentences:
@@ -1839,7 +1854,7 @@ if st.session_state.current_page == "Summary":
                             conn.close()
                             st.rerun()
 
-                        elif summary_mode == "Plain text":
+                        elif st.session_state['summary_mode'] == "Plain text":
                             full_summary = ""
                             if len(summary_sentences) > int(sentences):
                                 excess_sentences = len(summary_sentences) - int(sentences)
@@ -1872,7 +1887,7 @@ if st.session_state.current_page == "Summary":
                         }
                         response = requests.post(url, json=payload, headers=headers)
 
-                        if summary_mode == "Bullet points":
+                        if st.session_state['summary_mode'] == "Bullet points":
                             sentence_list = ""
                             for sentence in response.json()["data"]:
                                 sentence_list += f"- {sentence}\n\n"
@@ -1891,7 +1906,7 @@ if st.session_state.current_page == "Summary":
                             conn.close()
                             st.rerun()
 
-                        elif summary_mode == "Plain text":
+                        elif st.session_state['summary_mode'] == "Plain text":
                             all_sentences = ""
                             for sentence in response.json()["data"]:
                                 all_sentences += f"{sentence} "
@@ -1933,7 +1948,7 @@ if st.session_state.current_page == "Summary":
                         conn.close()
                         st.rerun()
 
-                elif summary_type == "Extractive":
+                elif st.session_state['summary_type'] == "Extractive":
                     from_youtube = any(char in summary_text_area for char in '.!?')
                     if from_youtube is False:
                         summary_from_youtube()
@@ -1950,7 +1965,7 @@ if st.session_state.current_page == "Summary":
                         }
                         response = requests.post(url, data=payload, headers=headers)
 
-                        if summary_mode == "Bullet points":
+                        if st.session_state['summary_mode'] == "Bullet points":
                             sentence_list = ""
                             for sentence in response.json()["sentences"]:
                                 sentence_list += f"- {sentence}\n\n"
@@ -1963,7 +1978,7 @@ if st.session_state.current_page == "Summary":
                             conn.close()
                             st.rerun()
 
-                        elif summary_mode == "Plain text":
+                        elif st.session_state['summary_mode'] == "Plain text":
                             all_sentences = ""
                             for sentence in response.json()["sentences"]:
                                 all_sentences += f"{sentence} "
