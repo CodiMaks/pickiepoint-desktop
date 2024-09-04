@@ -293,7 +293,7 @@ def summary_type_callback(summary_type_spec_key):
     if selection == "Abstractive":
         st.session_state['summary_type'] = "Abstractive"
     elif selection == "Extractive":
-        st.session_state['summary_type'] "Extractive"
+        st.session_state['summary_type'] = "Extractive"
 
 def summary_mode_callback(summary_mode_spec_key):
     selection = st.session_state[summary_mode_spec_key]
