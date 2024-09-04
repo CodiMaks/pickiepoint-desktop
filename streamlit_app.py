@@ -51,9 +51,8 @@ paraphrase_content TEXT, summary_content TEXT, email TEXT, password TEXT, custom
 # cursor.execute("""INSERT INTO areas VALUES (?, ?, ?, ?)""", ("", "", "", ""))
 
 if 'area_customer_id' not in st.session_state:
-    pass
-    # if st.session_state['localStorage'].getItem("user_id"):
-        # st.session_state['area_customer_id'] = st.session_state['localStorage'].getItem("user_id")
+    if localStorage.getItem("user_id"):
+        st.session_state['area_customer_id'] = localStorage.getItem("user_id")
 
 
 youtube_text_area_value = None
@@ -99,7 +98,6 @@ conn.close()
 
 language_codes_youtube_api = ["en", "zh-CN", "zh", "zh-TW", "es", "fr", "pt", "hi", "ar", "ja", "bn", "ru", "id", "af", "sq", "am", "hy", "az", "bs", "bg", "my", "hr", "cs", "da", "nl", "et", "fil", "fi", "ka", "de", "el", "ht", "he", "hu", "is", "ga", "it", "kk", "rw", "km", "ko", "ku", "ky", "lv", "lt", "mk", "ms", "mt", "ne", "no", "fa", "pl", "ro", "sm", "sr", "si", "sk", "sl", "so", "sw", "sv", "te", "th", "ti", "tr", "tk", "uk", "ur", "uz", "vi", "cy"]
 
-stripe.api_key = "sk_test_51PCNzVGPF0oQ7Wr5DFPkrdj5Mcnngnf1CLjrB0zGMqpEtvAlAFnChe3HLgT5jqYcl08D4XtcxvyCGOv5o4Iz44NF00EGUPSUWd"
 
 all_languages = [
     "", "English", "Chinese", "Spanish", "French", "Portuguese", "Hindi", "Arabic", "Japanese",
@@ -151,7 +149,7 @@ if 'session_id' not in st.session_state:
 
     time.sleep(2)
 
-    user_id_cookie = None
+    user_id_cookie = localStorage.getItem("user_id")
     if user_id_cookie:
         st.subheader("cookie is present")
 
@@ -263,7 +261,7 @@ if 'voice_gender' not in st.session_state:
     try:
         conn = sqlite3.connect('settings_save.db')
         cursor = conn.cursor()
-        cursor.execute("SELECT voice_gender FROM settings WHERE customer_id = ?", (st.session_state['localStorage'].getItem("user_id"), ))
+        cursor.execute("SELECT voice_gender FROM settings WHERE customer_id = ?", (localStorage.getItem("user_id"), ))
         the_gender = cursor.fetchone()[0]
         conn.commit()
         conn.close()
@@ -2019,7 +2017,7 @@ if st.session_state.current_page == 'Settings':
             st.session_state['voice_gender'] = "♂️ Male Voice"
             conn = sqlite3.connect('settings_save.db')
             cursor = conn.cursor()
-            cursor.execute("UPDATE settings SET voice_gender = ? WHERE customer_id = ?", ("Male", localS.getItem("user_id")))
+            cursor.execute("UPDATE settings SET voice_gender = ? WHERE customer_id = ?", ("Male", localStorage.getItem("user_id")))
             conn.commit()
             conn.close()
 
@@ -2028,7 +2026,7 @@ if st.session_state.current_page == 'Settings':
             st.session_state['voice_gender'] = "♀️ Female Voice"
             conn = sqlite3.connect('settings_save.db')
             cursor = conn.cursor()
-            cursor.execute("UPDATE settings SET voice_gender = ? WHERE customer_id = ?", ("Female", localS.getItem("user_id")))
+            cursor.execute("UPDATE settings SET voice_gender = ? WHERE customer_id = ?", ("Female", localStorage.getItem("user_id")))
             conn.commit()
             conn.close()
 
@@ -2240,7 +2238,7 @@ if st.session_state.current_page == "Sign up":
                                 conn.commit()
                                 conn.close()
 
-                                st.session_state['localStorage'].setItem("user_id", customer_id)
+                                localStorage.setItem("user_id", customer_id)
 
                                 st.session_state.current_page = "Trial"
                                 st.rerun()
@@ -2419,7 +2417,7 @@ if st.session_state.current_page == "Subscribe":
                     'price': 'price_1PGlyEGPF0oQ7Wr5oFxfZOvQ',
                     'quantity': 1,
                 }],
-                customer=localS.getItem("user_id"),
+                customer=localStorage.getItem("user_id"),
                 mode='subscription',
                 success_url='https://pickiepoint-subscription-confirmation.streamlit.app',
             )
@@ -2467,7 +2465,7 @@ if st.session_state.current_page == "Resubscribe":
                     'price': 'price_1PGlyEGPF0oQ7Wr5oFxfZOvQ',
                     'quantity': 1,
                 }],
-                customer=localS.getItem("user_id"),
+                customer=localStorage.getItem("user_id"),
                 mode='subscription',
                 success_url='https://pickiepoint-subscription-confirmation.streamlit.app',
             )
@@ -2547,7 +2545,7 @@ if st.session_state.current_page == "Login":
                         conn.commit()
                         conn.close()
 
-                        localS.setItem("user_id", customer_id)
+                        localStorage.setItem("user_id", customer_id)
 
                         # st.write('<meta http-equiv="refresh" content="0">', unsafe_allow_html=True)
 
@@ -2698,7 +2696,7 @@ if st.session_state.current_page == "Forgot password":
                     sg = SendGridAPIClient(SENGRID_API_KEY)
                     sg.send(message)
 
-                    localS.setItem("user_id", customer_id_for_pass_change)
+                    localStorage.setItem("user_id", customer_id_for_pass_change)
 
                     st.session_state['forgot_password_token'] = True
 
@@ -2739,7 +2737,7 @@ if st.session_state.current_page == "Verification code":
         verify_code_but = st.button("Verify", type="primary", use_container_width=True)
 
     if verify_code_but:
-        customer_id = localS.getItem("user_id")
+        customer_id = localStorage.getItem("user_id")
 
         conn = sqlite3.connect('settings_save.db')
         cursor = conn.cursor()
@@ -2784,7 +2782,7 @@ if st.session_state.current_page == "Password change":
             time.sleep(2)
             pass_change_message_placeholder.empty()
 
-            targeted_customer_id = localS.getItem("user_id")
+            targeted_customer_id = localStorage.getItem("user_id")
 
             conn = sqlite3.connect('text_areas.db')
             cursor = conn.cursor()
