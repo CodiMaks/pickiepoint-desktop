@@ -25,10 +25,9 @@ from sendgrid.helpers.mail import Mail
 import stripe
 
 
-st.set_page_config("Pickiepoint", "pickiepoint_logo_profile_picture_638x512.png")
+st.set_page_config("Pickiepoint", "pickiepoint_logo_profile_picture_512x512.png")
 
 html_for_add_to_homescreen = """
-<!-- Set the app's name as it will appear on the home screen -->
 <meta name="apple-mobile-web-app-title" content="Pickiepoint">
 """
 
