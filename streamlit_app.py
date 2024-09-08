@@ -29,6 +29,9 @@ st.set_page_config("Pickiepoint", "pickiepoint_logo_profile_picture_96x96.png")
 
 html_for_add_to_homescreen = """
 <meta name="apple-mobile-web-app-title" content="Pickiepoint">
+<link rel="apple-touch-icon" href="pickiepoint_logo_profile_picture_96x96.png">
+<link rel="apple-touch-icon" href="pickiepoint_logo_profile_picture_120x120.png">
+<link rel="apple-touch-icon" href="pickiepoint_logo_profile_picture_180x180.png">
 """
 
 st.components.v1.html(html_for_add_to_homescreen)
