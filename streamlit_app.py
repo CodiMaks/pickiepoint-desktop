@@ -155,7 +155,7 @@ if 'session_id' not in st.session_state:
                 
         conn = sqlite3.connect('text_areas.db')
         cursor = conn.cursor()
-        cursor.execute("SELECT email FROM areas WHERE customer_id = ?", localStorage.getItem("user_id"))
+        cursor.execute("SELECT email FROM areas WHERE customer_id = ?", (localStorage.getItem("user_id"), ))
         if cursor.fetchone[0]:
             cookie_continue_flag = False
         else:
