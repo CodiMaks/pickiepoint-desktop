@@ -26,7 +26,7 @@ import stripe
 
 st.set_page_config("Pickiepoint", "pickiepoint_logo_profile_picture.png")
 
-
+# DELETE THIS
 hide_st_style = """
             <style>
             #MainMenu {visibility: hidden;}
