@@ -38,7 +38,7 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 
 localStorage = localStoragePy('pickiepoint-app', 'sqlite')
 # localStorage.setItem("user_id", "cus_maks123417")
-localStorage.removeItem("user_id")
+# localStorage.removeItem("user_id")
 # st.title(localStorage.getItem("user_id"))
 
 
@@ -151,6 +151,29 @@ if 'session_id' not in st.session_state:
 
     user_id_cookie = localStorage.getItem("user_id")
     if user_id_cookie:
+        cookie_continue_flag = True
+                
+        conn = sqlite3.connect('text_areas.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT email FROM areas WHERE customer_id = ?", localStorage.getItem("user_id"))
+        if cursor.fetchone[0]:
+            cookie_continue_flag = False
+        else:
+            user_email = localStorage.getItem("user_email")
+            user_password = localStorage.getItem("user_password")
+            trial_start_date = localStorage.getItem("trial_start_date")
+            cursor.execute("""INSERT INTO areas VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+                            ("", "", "", "", user_email, user_password, user_id_cookie, trial_start_date))
+        conn.commit()
+        conn.close()
+
+        if cookie_continue_flag:
+            conn = sqlite3.connect('settings_save.db')
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO settings VALUES (?, ?, ?, ?, ?)", ("Female", 0, 0, 666666, user_id_cookie))
+            conn.commit()
+            conn.close()
+        
         st.subheader("cookie is present")
 
         try:
@@ -2275,6 +2298,9 @@ if st.session_state.current_page == "Sign up":
                                 conn.close()
 
                                 localStorage.setItem("user_id", customer_id)
+                                localStorage.setItem("user_email", user_email)
+                                localStorage.setItem("user_password", password_placeholder)
+                                localStorage.setItem("trial_start_date", time.time())
 
                                 st.session_state.current_page = "Trial"
                                 st.rerun()
