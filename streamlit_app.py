@@ -25,7 +25,7 @@ from sendgrid.helpers.mail import Mail
 import stripe
 
 
-st.set_page_config("Pickiepoint", "pickiepoint_logo_profile_picture_96x96.png")
+st.set_page_config("Pickiepoint", "pickiepoint_logo_profile_picture_192x192.png")
 
 # DELETE THIS AFTER TEST
 hide_st_style = """
