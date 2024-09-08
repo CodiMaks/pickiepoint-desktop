@@ -11,6 +11,7 @@ import re
 import time
 import webbrowser
 import random
+import os
 
 import arabic_reshaper
 from youtube_transcript_api import YouTubeTranscriptApi
@@ -116,9 +117,9 @@ all_languages = [
     "Turkish", "Turkmen", "Ukrainian", "Urdu", "Uzbek", "Vietnamese", "Welsh"
 ]
 
-stripe.api_key = st.secrets["STRIPE_API_KEY"]
-the_rapid_key = st.secrets["the_rapid_key"]
-SENDGRID_API_KEY = st.secrets["SENDGRID_API_KEY"]
+stripe.api_key = os.getenv("STRIPE_API_KEY")
+the_rapid_key = os.getenv("the_rapid_key")
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 
 
 all_codes = [
