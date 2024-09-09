@@ -38,6 +38,28 @@ html_for_add_to_homescreen = """
 
 st.components.v1.html(html_for_add_to_homescreen)
 
+html_code = """
+<script>
+// Check if user_id is already in localStorage
+if (!localStorage.getItem('user_id')) {
+    // If not, set a unique user_id
+    localStorage.setItem('user_id', 'user_12345');  // Set your unique ID logic here
+}
+
+// Retrieve the user_id from localStorage
+const userId = localStorage.getItem('user_id');
+
+// Display the user_id on the Streamlit app
+document.getElementById("user_id_display").innerText = userId;
+</script>
+
+<!-- HTML placeholder to display the user_id -->
+<div id="user_id_display">Loading user ID...</div>
+"""
+
+# Inject the HTML and JavaScript code into the Streamlit app
+st.components.v1.html(html_code, height=100)
+
 
 hide_st_style = """
             <style>
@@ -51,7 +73,7 @@ numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
 code_length = 7
 random_code = ''.join(str(random.choice(numbers)) for _ in range(code_length))
 
-localStorage = localStoragePy(random_code, 'sqlite')
+# localStorage = localStoragePy(random_code, 'sqlite')
 
 # localStorage.removeItem("user_id")
 # localStorage.removeItem("user_email")
