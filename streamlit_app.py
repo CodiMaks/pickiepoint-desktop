@@ -38,27 +38,16 @@ html_for_add_to_homescreen = """
 
 st.components.v1.html(html_for_add_to_homescreen)
 
-html_code = """
-<script>
-// Check if user_id is already in localStorage
-if (!localStorage.getItem('user_id')) {
-    // If not, set a unique user_id
-    localStorage.setItem('user_id', 'user_12345');  // Set your unique ID logic here
+url = "https://mobile-phones2.p.rapidapi.com/phones/%7Bid%7D"
+
+headers = {
+	"x-rapidapi-key": "62602787d3msh74a1d5a7b4137fbp14f4dcjsnb9e2dfc09695",
+	"x-rapidapi-host": "mobile-phones2.p.rapidapi.com"
 }
 
-// Retrieve the user_id from localStorage
-const userId = localStorage.getItem('user_id');
+response = requests.get(url, headers=headers)
 
-// Display the user_id on the Streamlit app
-document.getElementById("user_id_display").innerText = userId;
-</script>
-
-<!-- HTML placeholder to display the user_id -->
-<div id="user_id_display">Loading user ID...</div>
-"""
-
-# Inject the HTML and JavaScript code into the Streamlit app
-st.components.v1.html(html_code, height=100)
+st.text(response.json())
 
 
 hide_st_style = """
