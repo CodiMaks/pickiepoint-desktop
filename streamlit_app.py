@@ -27,7 +27,7 @@ import stripe
 
 st.set_page_config("Pickiepoint", "pickiepoint_logo_profile_picture_96x96.png")
 
-st.title("CAINE")
+st.title("John Wick")
 
 html_for_add_to_homescreen = """
 <meta name="apple-mobile-web-app-title" content="Pickiepoint">
