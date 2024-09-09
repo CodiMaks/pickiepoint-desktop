@@ -53,10 +53,10 @@ random_code = ''.join(str(random.choice(numbers)) for _ in range(code_length))
 
 localStorage = localStoragePy(random_code, 'sqlite')
 
-localStorage.removeItem("user_id")
-localStorage.removeItem("user_email")
-localStorage.removeItem("user_password")
-localStorage.removeItem("user_trial_start_date")
+# localStorage.removeItem("user_id")
+# localStorage.removeItem("user_email")
+# localStorage.removeItem("user_password")
+# localStorage.removeItem("user_trial_start_date")
 
 
 conn = sqlite3.connect('text_areas.db')
