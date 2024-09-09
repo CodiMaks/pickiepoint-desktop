@@ -47,14 +47,16 @@ hide_st_style = """
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+code_length = 7
+random_code = ''.join(str(random.choice(numbers)) for _ in range(code_length))
 
-localStorage = localStoragePy('pickiepoint-app', 'sqlite')
-# localStorage.setItem("user_id", "cus_maks123417")
+localStorage = localStoragePy(random_code, 'sqlite')
 
-# localStorage.removeItem("user_id")
-# localStorage.removeItem("user_email")
-# localStorage.removeItem("user_password")
-# localStorage.removeItem("user_trial_start_date")
+localStorage.removeItem("user_id")
+localStorage.removeItem("user_email")
+localStorage.removeItem("user_password")
+localStorage.removeItem("user_trial_start_date")
 
 
 conn = sqlite3.connect('text_areas.db')
