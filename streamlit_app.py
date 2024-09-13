@@ -38,17 +38,6 @@ html_for_add_to_homescreen = """
 
 st.components.v1.html(html_for_add_to_homescreen)
 
-url = "https://mobile-phones2.p.rapidapi.com/phones/%7Bid%7D"
-
-headers = {
-	"x-rapidapi-key": "62602787d3msh74a1d5a7b4137fbp14f4dcjsnb9e2dfc09695",
-	"x-rapidapi-host": "mobile-phones2.p.rapidapi.com"
-}
-
-response = requests.get(url, headers=headers)
-
-st.text(response.json())
-
 
 hide_st_style = """
             <style>
@@ -62,7 +51,7 @@ numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
 code_length = 7
 random_code = ''.join(str(random.choice(numbers)) for _ in range(code_length))
 
-# localStorage = localStoragePy(random_code, 'sqlite')
+localStorage = localStoragePy(random_code, 'sqlite')
 
 # localStorage.removeItem("user_id")
 # localStorage.removeItem("user_email")
